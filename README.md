@@ -15,7 +15,7 @@ Download the `profiling.sql` file that I sent in the Thesis group chat in Messen
 
 ## Starting the Node.js Server
 
-Run cd src and run `node server.js` to execute the server file. This will make sure the api is connected.
+Navigate to the folder where the server file exists, enter `cd src` on your command prompt or VSC terminal and run `node server.js` to execute the server file. This will make sure the api is connected.
 
 ## Starting the Angular Project
 
