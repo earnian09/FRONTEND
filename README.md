@@ -3,7 +3,35 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
 
-## INSTRUCTIONS
+# USING GIT TO DOWNLOAD THE PROJECT
+
+## Setting up Git
+
+Download git from https://git-scm.com/download/win, press Click here to download. Open the exe file and click `Next` on all. Yes, don't read anything lmao.
+
+## Setup
+
+Create a new folder anywhere in your computer, and run `cmd` to open the Command Prompt. Alternatively, open Command Prompt and use directory commands such as `cd` to go there.
+
+## Cloning
+
+To download the project and save it on your folder or directory, run the following commands:
+
+`git clone https://github.com/WDCAP2-EmployeeProfiling/employee-profiling-hub`
+
+`git add .`
+
+`git commit -m “message”`
+
+`git pull`
+
+`git push`
+
+## Ready
+
+To proceed, open CMD and make sure you are in the profiling folder. Now you can start running the system!
+
+# RUNNING THE PROJECT
 
 ## Start MySQL Server
 
