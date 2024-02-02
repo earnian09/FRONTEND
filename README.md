@@ -1,28 +1,30 @@
+
 # Profiling
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
 
-## Development server
+## INSTRUCTIONS
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Start MySQL Server
 
-## Code scaffolding
+Open XAMPP Control Panel or any SQL server app, and make sure MySQL. You should be able to connect to `http://localhost/phpmyadmin` to view the database.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Import SQL Database
 
-## Build
+Download the `profiling.sql` file that I sent in the Thesis group chat in Messenger (check pinned messages or files section) and go to phpmyadmin. At the top of the page, select the `Import` tab. Within File to Import section, click `choose file` and select the aforementioned profiling.sql. The database and tables should be installed!
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Starting the Node.js Server
 
-## Running unit tests
+Run cd src and run `node server.js` to execute the server file. This will make sure the api is connected.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Starting the Angular Project
 
-## Running end-to-end tests
+Run `ng s` to start the project. Make sure you are in the main folder of the project.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Test the system
 
-## Further help
+On your browser, enter the following link: `localhost:4200`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-"# employee-profiling-hub" 
+## Questions
+
+Feel free to message Chadle Rei Miclat on Messenger or Discord :D
