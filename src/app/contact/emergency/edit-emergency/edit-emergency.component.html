@@ -1,0 +1,29 @@
+<h1>Edit Emergency Contact</h1>
+
+<form [formGroup]="editForm" (ngSubmit)="confirm()">
+    <div class="row p-3 border">
+        <div class="row">
+            <label class="form-label">Contact Person:</label>
+            <input type="text" class="form-control" formControlName="contact_person">
+        </div>
+        <div class="row">
+            <label class="form-label">Relationship:</label>
+            <input type="text" class="form-control" formControlName="relationship">
+        </div>
+        <div class="row">
+            <label class="form-label">Home Phone No.:</label>
+            <input type="text" class="form-control" formControlName="home_phone_no">
+        </div>
+        <div class="row">
+            <label class="form-label">Mobile Phone No.:</label>
+            <input type="text" class="form-control" formControlName="mobile_phone_no">
+        </div>
+    </div>
+
+    <!-- Add any necessary buttons or additional form elements here -->
+</form>
+<!-- Confirmation -->
+<div>
+    <button (click)="confirm()" class="btn btn-primary">Confirm</button>
+    <button (click)="cancel()" class="btn btn-secondary">Cancel</button>
+</div>

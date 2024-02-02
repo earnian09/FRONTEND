@@ -1,0 +1,33 @@
+<h1>Edit Personal Contact</h1>
+
+<form [formGroup]="editForm" (ngSubmit)="confirm()">
+    <div class="row p-3 border">
+      <div class="row">
+        <label class="form-label">Present Address:</label>
+        <input type="text" class="form-control" formControlName="present_add">
+      </div>
+      <div class="row">
+        <label class="form-label">Home Phone Number:</label>
+        <input type="number" class="form-control" formControlName="home_phone">
+      </div>
+      <div class="row">
+        <label class="form-label">Mobile Phone Number:</label>
+        <input type="number" class="form-control" formControlName="mobile_phone">
+      </div>
+      <div class="row">
+        <label class="form-label">Email Address 1:</label>
+        <input type="text" class="form-control" formControlName="email_add_1">
+      </div>
+      <div class="row">
+        <label class="form-label">Email Address 2:</label>
+        <input type="text" class="form-control" formControlName="email_add_2">
+      </div>
+    </div>
+  
+  </form>
+
+<!-- Confirmation -->
+<div>
+    <button (click)="confirm()" class="btn btn-primary">Confirm</button>
+    <button (click)="cancel()" class="btn btn-secondary">Cancel</button>
+</div>

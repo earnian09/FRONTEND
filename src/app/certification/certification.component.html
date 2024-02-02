@@ -1,0 +1,134 @@
+<h1>Certification</h1>
+
+<div *ngIf="statusExists('Approved')" class="col p-4 border">
+    <h2 *ngIf="view_mode == 'employee'">Your Certifications</h2>
+    <h2 *ngIf="view_mode == 'admin'">Approved Certifications</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Cert ID</th>
+                <th>Attachment</th>
+                <th>Date Issued</th>
+                <th>Time</th>
+                <th>Title</th>
+                <th>Validity</th>
+                <th>Type</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let c of certification">
+                <tr *ngIf="c['status'] === 'Approved'">
+                    <td>{{c['cert_ID']}}</td>
+                    <td>{{c['attachment']}}</td>
+                    <td>{{c['date_issued']}}</td>
+                    <td>{{c['cert_time']}}</td>
+                    <td>{{c['cert_title']}}</td>
+                    <td>{{c['cert_validity']}}</td>
+                    <td>{{c['cert_type']}}</td>
+                    <td>{{c['role']}}</td>
+                    <td>{{c['status']}}</td>
+                    <td *ngIf="view_mode == 'employee'">
+                        <button class="btn btn-secondary" (click)="addedit('edit', c['cert_ID'])">Edit</button>
+                        <button class="btn btn-danger"
+                            (click)="deleteItem(c['cert_ID'], c['cert_title'])">Delete</button>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>
+
+<div class="col p-4" *ngIf="view_mode == 'employee'">
+    <button class="btn btn-primary text-center w-50" (click)="addedit('add', 0)">Add</button>
+</div>
+
+<div *ngIf="statusExists('Pending')" class="col p-4 border">
+    <h2>Pending Certifications</h2>
+    <p *ngIf="view_mode == 'admin'">Review Certifications carefully, this action cannot be undone. Click "Approve" to
+        approve, "Deny" to deny.</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Cert ID</th>
+                <th>Attachment</th>
+                <th>Date Issued</th>
+                <th>Time</th>
+                <th>Title</th>
+                <th>Validity</th>
+                <th>Type</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let c of certification">
+                <tr *ngIf="c['status'] === 'Pending'">
+                    <td>{{c['cert_ID']}}</td>
+                    <td>{{c['attachment']}}</td>
+                    <td>{{c['date_issued']}}</td>
+                    <td>{{c['cert_time']}}</td>
+                    <td>{{c['cert_title']}}</td>
+                    <td>{{c['cert_validity']}}</td>
+                    <td>{{c['cert_type']}}</td>
+                    <td>{{c['role']}}</td>
+                    <td>{{c['status']}}</td>
+                    <td *ngIf="view_mode == 'employee'">
+                        <button class="btn btn-secondary" (click)="addedit('edit', c['cert_ID'])">Edit</button>
+                        <button class="btn btn-danger"
+                            (click)="deleteItem(c['cert_ID'], c['cert_title'])">Delete</button>
+                    </td>
+                    <td *ngIf="view_mode == 'admin'">
+                        <button class="btn btn-success" (click)="approveordeny('approve', c['cert_ID'], c['cert_title'])">Approve</button>
+                        <button class="btn btn-danger"
+                            (click)="approveordeny('deny', c['cert_ID'], c['cert_title'])">Deny</button>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+
+</div>
+
+<div *ngIf="statusExists('Denied')" class="col p-4 border">
+    <h2>Denied Certifications</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Cert ID</th>
+                <th>Attachment</th>
+                <th>Date Issued</th>
+                <th>Time</th>
+                <th>Title</th>
+                <th>Validity</th>
+                <th>Type</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngFor="let c of certification">
+                <tr *ngIf="c['status'] === 'Denied'">
+                    <td>{{c['cert_ID']}}</td>
+                    <td>{{c['attachment']}}</td>
+                    <td>{{c['date_issued']}}</td>
+                    <td>{{c['cert_time']}}</td>
+                    <td>{{c['cert_title']}}</td>
+                    <td>{{c['cert_validity']}}</td>
+                    <td>{{c['cert_type']}}</td>
+                    <td>{{c['role']}}</td>
+                    <td>{{c['status']}}</td>
+                    <td *ngIf="view_mode == 'employee'">
+                        <button class="btn btn-secondary" (click)="addedit('edit', c['cert_ID'])">Edit</button>
+                        <button class="btn btn-danger"
+                            (click)="deleteItem(c['cert_ID'], c['cert_title'])">Delete</button>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+</div>

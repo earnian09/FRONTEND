@@ -1,0 +1,46 @@
+<h1>Education Details</h1>
+
+<form [formGroup]="editForm" (ngSubmit)="confirm()">
+    <div class="row p-3 border">
+      <h2>Bachelors Degree</h2>
+      <label class="form-label row">Bachelors Degree:</label>
+      <input type="text" class="form-control row" formControlName="bac_school">
+      
+      <label class="form-label row">Date Graduated:</label>
+      <input type="text" class="form-control row" formControlName="bac_grad_date">
+    </div>
+  
+    <div class="row p-3 border">
+      <h2>Masters Degree</h2>
+      <label class="form-label row">Masters Degree:</label>
+      <input type="text" class="form-control row" formControlName="mas_school">
+      
+      <label class="form-label row">Date Graduated:</label>
+      <input type="text" class="form-control row" formControlName="mas_grad_date">
+    </div>
+  
+    <div class="row p-3 border">
+      <h2>Doctorate Degree</h2>
+      <label class="form-label row">Doctorate Degree:</label>
+      <input type="text" class="form-control row" formControlName="doc_school">
+      
+      <label class="form-label row">Date Graduated:</label>
+      <input type="text" class="form-control row" formControlName="doc_grad_date">
+    </div>
+  
+    <div class="row p-3 border">
+      <h2>License</h2>
+      <label class="form-label row">Professional License:</label>
+      <input type="text" class="form-control row" formControlName="prof_lic">
+      
+      <label class="form-label row">License ID:</label>
+      <input type="text" class="form-control row" formControlName="lic_ID">
+    </div>
+  
+<!-- Confirmation -->
+<div>
+    <button (click)="confirm()" class="btn btn-primary">Confirm</button>
+    <button (click)="cancel()" class="btn btn-secondary">Cancel</button>
+</div>
+  </form>
+  

@@ -1,0 +1,31 @@
+<h1>Education Details</h1>
+
+<div class="row p-3 border">
+    <h2>Bachelors Degree</h2>
+    <div class="row">Bachelors Degree: {{ education?.bac_school }}</div>
+    <div class="row">Date Graduated: {{ education?.bac_grad_date }}</div>
+</div>
+
+<div class="row p-3 border">
+    <h2>Masters Degree</h2>
+    <div class="row">Masters Degree: {{ education?.mas_school }}</div>
+    <div class="row">Date Graduated: {{ education?.mas_grad_date }}</div>
+</div>
+
+<div class="row p-3 border">
+    <h2>Doctorate Degree</h2>   
+    <div class="row">Doctorate Degree: {{ education?.doc_school }}</div>
+    <div class="row">Date Graduated: {{ education?.doc_grad_date }}</div>
+</div>
+
+<div class="row p-3 border">
+    <h2>License</h2>
+    <div class="row">Professional License: {{ education?.prof_lic }}</div>
+    <div class="row">License ID: {{ education?.lic_ID }}</div>
+</div>
+
+<!-- For edits and deletes -->
+<div *ngIf="view_mode == 'employee'">
+    <button (click)="addedit()">Add/Edit</button>
+    <button (click)="delete()">Delete</button>
+  </div>

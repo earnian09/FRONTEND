@@ -1,0 +1,14 @@
+<h1>Organization</h1>
+
+<div *ngFor="let o of organizations" class="row p-2 border">
+    <div class="row">Organization ID: {{o['org_ID']}}</div>
+    <div class="row">Organization Name: {{o['org_name']}}</div>
+    <div class="row">Date: {{o['date']}}</div>
+    <div class="col-2" *ngIf="view_mode == 'employee'">
+        <button class="btn btn-secondary" (click)="addedit('edit', o['org_ID'])">Edit</button>
+        <button class="btn btn-danger" (click)="deleteItem(o['org_ID'], o['org_name'])">Delete</button>
+    </div>
+</div>
+<div class="col p-4" *ngIf="view_mode == 'employee'">
+    <button class="btn btn-primary text-center w-50" (click)="addedit('add', 0)">Add</button>
+</div>

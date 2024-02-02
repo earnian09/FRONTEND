@@ -1,0 +1,18 @@
+<h2>Edit/Add Provincial Contact</h2>
+<form [formGroup]="editForm" (ngSubmit)="confirm()">
+    <div class="row">
+        <label class="form-label">Provincial Address:</label>
+        <input type="text" class="form-control" formControlName="provincial_add">
+    </div>
+    <div class="row">
+        <label class="form-label">Provincial Phone Number:</label>
+        <input type="text" class="form-control" formControlName="provincial_phone">
+    </div>
+</form>
+
+
+<!-- Confirmation -->
+<div>
+    <button (click)="confirm()" class="btn btn-primary">Confirm</button>
+    <button (click)="cancel()" class="btn btn-secondary">Cancel</button>
+</div>

@@ -1,0 +1,15 @@
+<h1>Personal Contact</h1>
+
+<div class="row p-3 border">
+    <div class="row">Present Address: {{ personalcontact?.present_add }}</div>
+    <div class="row">Home Phone Number: {{ personalcontact?.home_phone }}</div>
+    <div class="row">Mobile Phone Number: {{ personalcontact?.mobile_phone }}</div>
+    <div class="row">Email Address 1: {{ personalcontact?.email_add_1 }}</div>
+    <div class="row">Email Address 2: {{ personalcontact?.email_add_2 }}</div>
+</div>
+
+<!-- For edits and deletes -->
+<div *ngIf="view_mode == 'employee'">
+    <button (click)="addedit()">Add/Edit</button>
+    <button (click)="delete()">Delete</button>
+</div>

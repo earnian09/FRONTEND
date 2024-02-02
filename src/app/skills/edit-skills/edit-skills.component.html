@@ -1,0 +1,16 @@
+<h2>Edit/Add Skills</h2>
+
+<form [formGroup]="editForm" (ngSubmit)="confirm()">
+    <div class="row">
+        <label class="form-label">Skills:</label>
+        <input type="text" class="form-control" formControlName="skills">
+    </div>
+
+    <!-- Add any necessary buttons or additional form elements here -->
+</form>
+
+<!-- Confirmation -->
+<div>
+    <button (click)="confirm()" class="btn btn-primary">Confirm</button>
+    <button (click)="cancel()" class="btn btn-secondary">Cancel</button>
+</div>

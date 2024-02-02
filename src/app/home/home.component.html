@@ -1,0 +1,113 @@
+<div class="row">
+    <div class="col-2 p-5 border">
+        <h1>Home</h1>
+
+        <button (click)="logout()">
+            Logout
+        </button>
+
+        <section>
+
+            <ng-container class="row pt-3 pb-3"
+            *ngIf="view_mode == 'admin'">
+            <label for="">Select Employee</label>
+                <select name="" id="" class="form-select"
+                [(ngModel)]="select_which_employee"
+                (change)="employee_selected_changed()">
+                    <option 
+                    *ngFor="let employee of allEmployees"
+                    (value)="employee.emp_ID">
+                        {{ employee.emp_ID }}
+                    </option>   
+                </select>
+
+            </ng-container>
+
+            <hr>
+
+            <h3>Navigation</h3>
+
+            <div class="row"> <!--Employee Information-->
+                <button class="btn" (click)="navigate('employeeinformation'); toggleDisabled(0)"
+                    [disabled]="buttonStates[0]">
+                    Information
+                </button>
+            </div>
+            <div class="row"> <!--Dependencies-->
+                <button class="btn" (click)="navigate('dependencies'); toggleDisabled(1)"
+                [disabled]="buttonStates[1]">
+                    Dependencies
+                </button>
+            </div>
+            <div class="row"> <!--Certification-->
+                <button class="btn" (click)="navigate('certification'); toggleDisabled(2)"
+                    [disabled]="buttonStates[2]">
+                    Certification
+                </button>
+            </div>
+            <div class="row"> <!--Organization-->
+                <button class="btn" (click)="navigate('organization'); toggleDisabled(3)"
+                [disabled]="buttonStates[3]">
+                    Organization
+                </button>
+            </div>
+            <div class="row"> <!--Accounting Details-->
+                <button class="btn" (click)="navigate('accountingdetails'); toggleDisabled(4)"
+                    [disabled]="buttonStates[4]">
+                    Accounting Details
+                </button>
+            </div>
+            <div class="row"> <!--Education-->
+                <button class="btn" (click)="navigate('education'); toggleDisabled(5)"
+                [disabled]="buttonStates[5]">
+                    Education
+                </button>
+            </div>
+            <div class="row"> <!--Teaching Loads-->
+                <button class="btn" (click)="navigate('teachingloads'); toggleDisabled(6)"
+                    [disabled]="buttonStates[6]">
+                    Teaching Loads
+                </button>
+            </div>
+            <div class="row"> <!--Work Experience-->
+                <button class="btn" (click)="navigate('workexperience'); toggleDisabled(7)"
+                    [disabled]="buttonStates[7]">
+                    Work Experience
+                </button>
+            </div>
+            <div class="row"> <!--Employee Details-->
+                <button class="btn" (click)="navigate('employeedetails'); toggleDisabled(8)"
+                    [disabled]="buttonStates[8]">
+                    Employee Details
+                </button>
+            </div>
+            <div class="row"> <!--Skills-->
+                <button class="btn" (click)="navigate('skills'); toggleDisabled(9)"
+                    [disabled]="buttonStates[9]">
+                    Skills
+                </button>
+            </div>
+            <div class="row"> <!--Personal Contact-->
+                <button class="btn" (click)="navigate('personalcontact'); toggleDisabled(10)"
+                    [disabled]="buttonStates[10]">
+                    Personal Contact
+                </button>
+            </div>
+            <div class="row"> <!--Provincial Contact-->
+                <button class="btn" (click)="navigate('provincialcontact'); toggleDisabled(11)"
+                    [disabled]="buttonStates[11]">
+                    Provincial Contact
+                </button>
+            </div>
+            <div class="row"> <!--Emergency Contact-->
+                <button class="btn" (click)="navigate('emergencycontact'); toggleDisabled(12)"
+                    [disabled]="buttonStates[12]">
+                    Emergency Contact
+                </button>
+            </div>
+        </section>
+    </div>
+    <div class="col p-2 border"> <!--What page is being displayed-->
+        <router-outlet></router-outlet>
+    </div>
+</div>

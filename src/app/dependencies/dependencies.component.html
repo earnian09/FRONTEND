@@ -1,0 +1,18 @@
+<h1>Dependencies</h1>
+
+<div class="col p-4">
+    <div *ngFor="let d of dependencies" class="row p-2 border">
+        <div class="col-1"><i>ID: {{d['dependencies_ID']}}</i></div>
+        <div class="col"><b>Full Name: </b>{{ d['f_name'] }}</div>
+        <div class="col"><b>Date of Birth: </b>{{ d['date_of_birth'] }}</div>
+        <div class="col"><b>Relationship: </b>{{ d['relationship'] }}</div>
+        <div class="col-2" *ngIf="view_mode == 'employee'">
+            <button class="btn btn-secondary" (click)="addedit('edit', d['dependencies_ID'])">Edit</button>
+            <button class="btn btn-danger" (click)="deleteItem(d['dependencies_ID'], d['f_name'])">Delete</button>
+        </div>
+    </div>
+</div> <!-- Part for the info -->
+
+<div class="col p-4" *ngIf="view_mode == 'employee'">
+    <button class="btn btn-primary text-center w-50" (click)="addedit('add', 0)">Add</button>
+</div>

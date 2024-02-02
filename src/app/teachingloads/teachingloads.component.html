@@ -1,0 +1,38 @@
+<h1>Teaching Loads</h1>
+
+<div class="p3">
+    <table>
+        <thead>
+        <tr>
+            <th>Teaching Loads ID</th>
+            <th>Academic Year</th>
+            <th>Semester</th>
+            <th>Subject</th>
+            <th>No. Of Units</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let t of teachingloads">
+            <td>{{ t['teachingloads_ID'] }}</td>
+            <td>{{ t['acad_year'] }}</td>
+            <td>{{ t['sem'] }}</td>
+            <td>{{ t['sub_taught'] }}</td>
+            <td>{{ t['no_of_units'] }}</td>
+            <td *ngIf="view_mode == 'employee'">
+                <button class="btn btn-secondary" (click)="addedit('edit', t['teachingloads_ID'])">Edit</button>
+                <button class="btn btn-danger"
+                (click)="deleteItem(
+                    t['teachingloads_ID'],
+                    t['acad_year'],
+                    t['sem'],
+                    t['sub_taught']
+                )">Delete</button>
+            </td>
+        </tr>
+    </tbody>
+    </table>
+</div>
+<div class="col p-4" *ngIf="view_mode == 'employee'">
+    <button class="btn btn-primary text-center w-50" (click)="addedit('add', 0)">Add</button>
+</div>

@@ -1,0 +1,18 @@
+<h1>Employee Details</h1>
+
+<div class="p3 border">
+    <div class="row p-2">Department: {{ employeedetails?.department }}</div>
+    <div class="row p-2">Date Hired: {{ employeedetails?.date_hire }}</div>
+    <div class="row p-2">Employee Type: {{ employeedetails?.emp_type }}</div>
+    <div class="row p-2">Teaching Class: {{ employeedetails?.teaching_class }}</div>
+    <div class="row p-2">Status: {{ employeedetails?.status }}</div>
+    <div class="row p-2">Date Regularized: {{ employeedetails?.date_regularized }}</div>
+    <div class="row p-2">Time Stamp: {{ employeedetails?.time_stamp }}</div>
+
+</div>
+
+<!-- For edits and deletes -->
+<div *ngIf="view_mode == 'employee'">
+    <button (click)="addedit()">Add/Edit</button>
+    <button (click)="delete()">Delete</button>
+</div>

@@ -1,0 +1,14 @@
+<h1>Emergency Contact</h1>
+
+<div class="row p-3 border">
+    <div class="row">Contact Person: {{ emergency?.contact_person }}</div>
+    <div class="row">Relationship: {{ emergency?.relationship }}</div>
+    <div class="row">Home Phone No.: {{ emergency?.home_phone_no }}</div>
+    <div class="row">Mobile Phone No.: {{ emergency?.mobile_phone_no }}</div>
+</div>
+
+<!-- For edits and deletes -->
+<div *ngIf="view_mode == 'employee'">
+    <button (click)="addedit()">Add/Edit</button>
+    <button (click)="delete()">Delete</button>
+</div>

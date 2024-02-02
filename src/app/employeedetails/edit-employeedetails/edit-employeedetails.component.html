@@ -1,0 +1,41 @@
+<h1>Edit Employee Details</h1>
+
+<form [formGroup]="editForm" (ngSubmit)="confirm()">
+    <div class="p3 border">
+      <div class="row p-2">
+        <label class="form-label">Department:</label>
+        <input type="text" class="form-control" formControlName="department">
+      </div>
+      <div class="row p-2">
+        <label class="form-label">Date Hired:</label>
+        <input type="text" class="form-control" formControlName="date_hire">
+      </div>
+      <div class="row p-2">
+        <label class="form-label">Employee Type:</label>
+        <input type="text" class="form-control" formControlName="emp_type">
+      </div>
+      <div class="row p-2">
+        <label class="form-label">Teaching Class:</label>
+        <input type="text" class="form-control" formControlName="teaching_class">
+      </div>
+      <div class="row p-2">
+        <label class="form-label">Status:</label>
+        <input type="text" class="form-control" formControlName="status">
+      </div>
+      <div class="row p-2">
+        <label class="form-label">Date Regularized:</label>
+        <input type="text" class="form-control" formControlName="date_regularized">
+      </div>
+      <div class="row p-2">
+        <label class="form-label">Time Stamp:</label>
+        <input type="text" class="form-control" formControlName="time_stamp">
+      </div>
+    </div>
+
+  </form>
+  
+<!-- Confirmation -->
+<div>
+    <button (click)="confirm()" class="btn btn-primary">Confirm</button>
+    <button (click)="cancel()" class="btn btn-secondary">Cancel</button>
+</div>

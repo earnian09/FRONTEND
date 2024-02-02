@@ -1,0 +1,24 @@
+<h1>Employee Information</h1>
+
+<div class="col p-4">
+    <div class="row">ID: {{ employeeInformation?.emp_ID }}</div>
+    <div class="row">Name: {{ employeeInformation?.emp_name }}</div>
+    <div class="row">Nickname: {{ employeeInformation?.emp_nickname }}</div>
+    <div class="row">Gender: {{ employeeInformation?.emp_gender }}</div>
+    <div class="row">Maiden Name: {{ employeeInformation?.emp_maiden_name }}</div>
+    <div class="row">SSS Full Name: {{ employeeInformation?.emp_sss_fName }}</div>
+    <div class="row">Date of Birth: {{ employeeInformation?.emp_dob }}</div>
+    <div class="row">Place of Birth: {{ employeeInformation?.emp_pob }}</div>
+    <div class="row">Civil Status: {{ employeeInformation?.emp_cStatus }}</div>
+    <div class="row">Religion: {{ employeeInformation?.emp_religion }}</div>
+    <div class="row">Blood Type: {{ employeeInformation?.emp_blood_type }}</div>
+    <div class="row">Number of Loads: {{ employeeInformation?.no_of_loads }}</div>
+    <div class="row">Rest Day: {{ employeeInformation?.rest_day }}</div>
+    <div class="row">Full Address: {{ employeeInformation?.emp_address }}</div>
+  </div>
+
+<!-- For edits and deletes -->
+<div *ngIf="view_mode == 'employee'">
+  <button (click)="addedit()" class="btn btn-secondary">Add/Edit</button>
+  <button (click)="delete()" class="btn btn-danger">Delete</button>
+</div>

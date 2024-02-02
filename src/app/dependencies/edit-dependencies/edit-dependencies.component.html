@@ -1,0 +1,25 @@
+<h2>Edit/Add Dependencies</h2>
+<form [formGroup]="editForm" (ngSubmit)="confirm()">
+    <div class="col p-4">
+      <div class="row p-2 border">
+          <div class="col">
+              <label class="form-label"><b>Full Name:</b></label>
+              <input type="text" class="form-control" formControlName="f_name">
+          </div>
+          <div class="col">
+              <label class="form-label"><b>Date of Birth:</b></label>
+              <input type="text" class="form-control" formControlName="date_of_birth">
+          </div>
+          <div class="col">
+              <label class="form-label"><b>Relationship:</b></label>
+              <input type="text" class="form-control" formControlName="relationship">
+          </div>
+      </div>
+    </div>
+  </form>
+  
+<!-- Confirmation -->
+<div>
+    <button (click)="confirm()" class="btn btn-primary">Confirm</button>
+    <button (click)="cancel()" class="btn btn-secondary">Cancel</button>
+</div>

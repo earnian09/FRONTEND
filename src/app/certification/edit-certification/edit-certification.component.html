@@ -1,0 +1,33 @@
+<h2>Edit/Add Certification</h2>
+
+<form [formGroup]="editForm" (ngSubmit)="confirm()">
+    <div class="col p-4 border">
+        <label class="form-label">Attachment</label>
+        <input type="text" class="form-control" formControlName="attachment">
+
+        <label class="form-label">Date Issued</label>
+        <input type="text" class="form-control" formControlName="date_issued">
+
+        <label class="form-label">Time</label>
+        <input type="text" class="form-control" formControlName="cert_time">
+
+        <label class="form-label">Title</label>
+        <input type="text" class="form-control" formControlName="cert_title">
+        
+        <label class="form-label">Validity</label>
+        <input type="text" class="form-control" formControlName="cert_validity">
+
+        <label class="form-label">Type</label>
+        <input type="text" class="form-control" formControlName="cert_type">
+
+        <label class="form-label">Role</label>
+        <input type="text" class="form-control" formControlName="role">
+    </div>
+</form>
+
+
+<!-- Confirmation -->
+<div>
+    <button (click)="confirm()" class="btn btn-primary">Confirm</button>
+    <button (click)="cancel()" class="btn btn-secondary">Cancel</button>
+</div>

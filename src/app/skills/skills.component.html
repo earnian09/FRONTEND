@@ -1,0 +1,20 @@
+<h1>Skills</h1>
+
+<div class="p2 border">
+    <ul>
+        <li *ngFor="let s of skills"
+        class="row p-2">
+        <i>{{ s.skills_ID }}</i>
+        <p>{{ s.skills }}</p>
+        <div *ngIf="view_mode == 'employee'">
+            <button class="btn btn-secondary" (click)="addedit('edit', s['skills_ID'])">Edit</button>
+            <button class="btn btn-danger" (click)="deleteItem(s['skills_ID'], s['skills'])">Delete</button>
+        </div>
+        <hr />
+    </li>
+    </ul>
+</div>
+
+<div class="col p-4" *ngIf="view_mode == 'employee'">
+    <button class="btn btn-primary text-center w-50" (click)="addedit('add', 0)">Add</button>
+</div>

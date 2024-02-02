@@ -1,0 +1,23 @@
+<h1>Work Experience</h1>
+
+<div class="p2 border">
+    <div *ngFor="let w of workexperience"
+    class="row m-3">
+    <div class="row">Work Experience Id: {{ w?.experience_ID }}</div>
+    <div class="row">Company Name: {{ w?.company_name }}</div>
+    <div class="row">Date: {{ w?.date }}</div>
+    <div class="row">Company Address: {{ w?.company_add }}</div>
+    <div class="row">Position: {{ w?.position }}</div>
+    <div class="row">Reason For Exit: {{ w?.reason_exit }}</div>
+    <div class="row">Type: {{ w?.type }}</div>
+    <div class="col-2" *ngIf="view_mode == 'employee'">
+        <button class="btn btn-secondary" (click)="addedit('edit', w['experience_ID'])">Edit</button>
+        <button class="btn btn-danger" (click)="deleteItem(w['experience_ID'], w['company_name'])">Delete</button>
+    </div>
+
+    </div>
+</div>
+
+<div class="col p-4" *ngIf="view_mode == 'employee'">
+    <button class="btn btn-primary text-center w-50" (click)="addedit('add', 0)">Add</button>
+</div>

@@ -1,0 +1,23 @@
+<h1>Accounting Details</h1>
+
+<div class="row p-4">
+    <form [formGroup]="editForm" (ngSubmit)="confirm()">
+        <label class="form-label row">Social Security Number:</label>
+        <input type="text" class="form-control row" formControlName="sss_no">
+
+        <label class="form-label row">Tax ID Number:</label>
+        <input type="text" class="form-control row" formControlName="tax_no">
+
+        <label class="form-label row">Pag-Ibig Fund Number:</label>
+        <input type="text" class="form-control row" formControlName="pagibig_no">
+
+        <label class="form-label row">PhilHealth ID Number:</label>
+        <input type="text" class="form-control row" formControlName="philhealth_no">
+    </form>
+</div>
+
+<!-- Confirmation -->
+<div>
+    <button (click)="confirm()" class="btn btn-primary">Confirm</button>
+    <button (click)="cancel()" class="btn btn-secondary">Cancel</button>
+</div>

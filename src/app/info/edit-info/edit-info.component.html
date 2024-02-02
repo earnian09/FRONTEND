@@ -1,0 +1,50 @@
+<h1>Add or Edit Employee Information</h1>
+
+<div class="col p-4">
+    <form [formGroup]="editForm" (ngSubmit)="confirm()">
+        <label for="emp_name" class="form-label">Name:</label>
+        <input type="text" id="emp_name" formControlName="emp_name" class="form-control">
+
+        <label for="emp_nickname" class="form-label">Nickname:</label>
+        <input type="text" id="emp_nickname" formControlName="emp_nickname" class="form-control">
+
+        <label for="emp_gender" class="form-label">Gender:</label>
+        <input type="text" id="emp_gender" formControlName="emp_gender" class="form-control">
+
+        <label for="emp_maiden_name" class="form-label">Maiden Name:</label>
+        <input type="text" id="emp_maiden_name" formControlName="emp_maiden_name" class="form-control">
+
+        <label for="emp_sss_fName" class="form-label">SSS Full Name:</label>
+        <input type="text" id="emp_sss_fName" formControlName="emp_sss_fName" class="form-control">
+
+        <label for="emp_dob" class="form-label">Date of Birth:</label>
+        <input type="text" id="emp_dob" formControlName="emp_dob" class="form-control">
+
+        <label for="emp_pob" class="form-label">Place of Birth:</label>
+        <input type="text" id="emp_pob" formControlName="emp_pob" class="form-control">
+
+        <label for="emp_cStatus" class="form-label">Civil Status:</label>
+        <input type="text" id="emp_cStatus" formControlName="emp_cStatus" class="form-control">
+
+        <label for="emp_religion" class="form-label">Religion:</label>
+        <input type="text" id="emp_religion" formControlName="emp_religion" class="form-control">
+
+        <label for="emp_blood_type" class="form-label">Blood Type:</label>
+        <input type="text" id="emp_blood_type" formControlName="emp_blood_type" class="form-control">
+
+        <label for="no_of_loads" class="form-label">Number of Loads:</label>
+        <input type="text" id="no_of_loads" formControlName="no_of_loads" class="form-control">
+
+        <label for="rest_day" class="form-label">Rest Day:</label>
+        <input type="text" id="rest_day" formControlName="rest_day" class="form-control">
+
+        <label for="emp_address" class="form-label">Full Address:</label>
+        <input type="text" id="emp_address" formControlName="emp_address" class="form-control">
+    </form>
+</div>
+
+<!-- Confirmation -->
+<div>
+    <button (click)="confirm()" class="btn btn-primary">Confirm</button>
+    <button (click)="cancel()" class="btn btn-secondary">Cancel</button>
+</div>
