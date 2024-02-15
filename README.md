@@ -1,28 +1,58 @@
+
 # Profiling
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.0.0.
 
-## Development server
+# USING GIT TO DOWNLOAD THE PROJECT
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Setting up Git
 
-## Code scaffolding
+Download git from https://git-scm.com/download/win, press Click here to download. Open the exe file and click `Next` on all. Yes, don't read anything lmao.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Setup
 
-## Build
+Create a new folder anywhere in your computer, and run `cmd` to open the Command Prompt. Alternatively, open Command Prompt and use directory commands such as `cd` to go there.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## Cloning
 
-## Running unit tests
+To download the project and save it on your folder or directory, run the following commands:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+`git clone https://github.com/WDCAP2-EmployeeProfiling/employee-profiling-hub`
 
-## Running end-to-end tests
+`git add .`
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+`git commit -m “message”`
 
-## Further help
+`git pull`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-"# employee-profiling-hub" 
+`git push`
+
+## Ready
+
+To proceed, open CMD and make sure you are in the profiling folder. Now you can start running the system!
+
+# RUNNING THE PROJECT
+
+## Start MySQL Server
+
+Open XAMPP Control Panel or any SQL server app, and make sure MySQL. You should be able to connect to `http://localhost/phpmyadmin` to view the database.
+
+## Import SQL Database
+
+Download the `profiling.sql` file that I sent in the Thesis group chat in Messenger (check pinned messages or files section) and go to phpmyadmin. At the top of the page, select the `Import` tab. Within File to Import section, click `choose file` and select the aforementioned profiling.sql. The database and tables should be installed!
+
+## Starting the Node.js Server
+
+Navigate to the folder where the server file exists, enter `cd src` on your command prompt or VSC terminal and run `node server.js` to execute the server file. This will make sure the api is connected.
+
+## Starting the Angular Project
+
+Run `ng s` to start the project. Make sure you are in the main folder of the project.
+
+## Test the system
+
+On your browser, enter the following link: `localhost:4200`
+
+## Questions
+
+Feel free to message Chadle Rei Miclat on Messenger or Discord :D
