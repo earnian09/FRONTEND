@@ -26,15 +26,25 @@ export class EditProvincialcontactComponent {
     this.provincial_ID = sharedDataService.get_itemID();
 
     // If the program is in edit mode, this happens
+
+    this.getProvincialContactItem().then(() => {
+      this.initForm();
+    })
+  }
+
+  ngOnInit() {
+    if (!this.editForm) {
+      this.initForm();
+    }
+  }
+  initForm() {
     if (this.isNewData === false) {
-      this.getProvincialContactItem().then(() => {
-        this.editForm = this.formBuilder.group({
-          mode: 'edit',
-          provincial_add: [this.provincialItem?.provincial_add, Validators.required],
-          provincial_phone: [this.provincialItem?.provincial_phone, Validators.required],
-        });
-       
-      })
+      this.editForm = this.formBuilder.group({
+        mode: 'edit',
+        provincial_add: [this.provincialItem?.provincial_add, Validators.required],
+        provincial_phone: [this.provincialItem?.provincial_phone, Validators.required],
+      });
+
     }
     else {
       this.editForm = this.formBuilder.group({
@@ -64,7 +74,8 @@ export class EditProvincialcontactComponent {
         error => {
           console.error("Something went wrong:", error);
         }
-      )}
+      )
+  }
   cancel() { this.router.navigate(['home/provincialcontact']) }
 
   getProvincialContactItem() {

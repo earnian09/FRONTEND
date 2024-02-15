@@ -2,7 +2,7 @@ import { Component, LOCALE_ID } from '@angular/core';
 import { SharedDataService } from '../../shared-data-service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { EmployeeInformation } from '../../interfaces';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,31 +19,39 @@ export class EditInformation {
   editForm!: FormGroup;
 
   constructor(private sharedDataService: SharedDataService, private router: Router, private formBuilder: FormBuilder, private http: HttpClient) {
-    // This is to 
     this.emp_ID = this.sharedDataService.getEmployeeId();
     this.getEmployeeInfo().then(() => {
-      this.editForm = this.formBuilder.group({
-        emp_name: [this.employeeInformation?.emp_name, Validators.required],
-        emp_nickname: [this.employeeInformation?.emp_nickname, Validators.required],
-        emp_gender: [this.employeeInformation?.emp_gender, Validators.required],
-        emp_maiden_name: [this.employeeInformation?.emp_maiden_name, Validators.required],
-        emp_sss_fName: [this.employeeInformation?.emp_sss_fName, Validators.required],
-        emp_dob: [this.employeeInformation?.emp_dob, Validators.required],
-        emp_pob: [this.employeeInformation?.emp_pob, Validators.required],
-        emp_cStatus: [this.employeeInformation?.emp_cStatus, Validators.required],
-        emp_religion: [this.employeeInformation?.emp_religion, Validators.required],
-        emp_blood_type: [this.employeeInformation?.emp_blood_type, Validators.required],
-        no_of_loads: [this.employeeInformation?.no_of_loads, Validators.required],
-        rest_day: [this.employeeInformation?.rest_day, Validators.required],
-        emp_address: [this.employeeInformation?.emp_address, Validators.required]
-      });
+      this.initForm();
     });
+  }
+  // Initialize form after getEmployeeInfo has occured. Add values to form inputs
+  ngOnInit() {
+    if (!this.editForm) {
+      this.initForm();
+    }
+  }
 
-
+  initForm(){
+    this.editForm = this.formBuilder.group({
+      emp_name: [this.employeeInformation?.emp_name, Validators.required],
+      emp_nickname: [this.employeeInformation?.emp_nickname, Validators.required],
+      emp_gender: [this.employeeInformation?.emp_gender, Validators.required],
+      emp_maiden_name: [this.employeeInformation?.emp_maiden_name, Validators.required],
+      emp_sss_fName: [this.employeeInformation?.emp_sss_fName, Validators.required],
+      emp_dob: [this.employeeInformation?.emp_dob, Validators.required],
+      emp_pob: [this.employeeInformation?.emp_pob, Validators.required],
+      emp_cStatus: [this.employeeInformation?.emp_cStatus, Validators.required],
+      emp_religion: [this.employeeInformation?.emp_religion, Validators.required],
+      emp_blood_type: [this.employeeInformation?.emp_blood_type, Validators.required],
+      no_of_loads: [this.employeeInformation?.no_of_loads, Validators.required],
+      rest_day: [this.employeeInformation?.rest_day, Validators.required],
+      emp_address: [this.employeeInformation?.emp_address, Validators.required]
+    });
   }
 
   // Confirm Edits, execute editing
   confirm() {
+
     const editData = {
       'tbl': 'tbl_info',
       'emp_ID': this.emp_ID,
@@ -61,6 +69,9 @@ export class EditInformation {
       'rest_day': this.editForm.get('rest_day')!.value,
       'emp_address': this.editForm.get('emp_address')!.value
     };
+
+    // Handles date being null, replaces with empty string to avoid errors
+    editData.emp_dob ??= '';
 
     this.http.put<any>(`http://localhost:3000/update`, editData)
       .subscribe(

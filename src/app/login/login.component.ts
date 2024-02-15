@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router, private http: HttpClient, private formBuilder: FormBuilder, private sharedDataService: SharedDataService) { }
   ngOnInit(): void {
+
     this.loginForm = this.formBuilder.group({
       username: ['1', Validators.required],
       password: ['1', Validators.required]
@@ -41,11 +42,18 @@ export class LoginComponent implements OnInit {
       this.http.post(`http://localhost:3000/login`, postData)
         .subscribe(
           (resultData) => {
-            // Result Found
-            console.log(resultData);
 
-            this.sharedDataService.set_view_mode('employee')
+            // Clear previous session
+            sessionStorage.clear();
+
+            // Saves employee ID to be used in other components
             this.sharedDataService.setEmployeeId(usernameControl?.value);
+            this.sharedDataService.setEmployeeId_session(usernameControl?.value);
+
+            // Save view mode (this tells the system which view to do), relevant for employee vs admin login
+            this.sharedDataService.set_view_mode('employee')
+            this.sharedDataService.set_view_mode_session('employee')
+
             this.router.navigate(['/home'])
           },
           error => {

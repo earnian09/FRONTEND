@@ -21,14 +21,23 @@ export class EditPersonalcontactComponent {
     this.emp_ID = this.sharedDataService.getEmployeeId();
 
     this.getPersonalContact().then(() => {
-      this.editForm = this.formBuilder.group({
-        present_add: [this.personalcontact?.present_add, Validators.required],
-        home_phone: [this.personalcontact?.home_phone, Validators.required],
-        mobile_phone: [this.personalcontact?.mobile_phone, Validators.required],
-        email_add_1: [this.personalcontact?.email_add_1, Validators.required],
-        email_add_2: [this.personalcontact?.email_add_2, Validators.required],
-      });
-    });;
+      this.initForm();
+    });
+  }
+  
+  ngOnInit() {
+    if (!this.editForm) {
+      this.initForm();
+    }
+  }
+  initForm(){
+    this.editForm = this.formBuilder.group({
+      present_add: [this.personalcontact?.present_add, Validators.required],
+      home_phone: [this.personalcontact?.home_phone, Validators.required],
+      mobile_phone: [this.personalcontact?.mobile_phone, Validators.required],
+      email_add_1: [this.personalcontact?.email_add_1, Validators.required],
+      email_add_2: [this.personalcontact?.email_add_2, Validators.required],
+    });
   }
 
   confirm() {

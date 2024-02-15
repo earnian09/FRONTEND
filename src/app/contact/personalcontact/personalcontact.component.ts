@@ -26,26 +26,32 @@ export class PersonalcontactComponent {
 
   addedit() { this.router.navigate(['home/personalcontact/edit-personalcontact']) }
 
-  delete() { 
-    const editData = {
-      'tbl': 'tbl_personal_contact',
-      'emp_ID': this.emp_ID,
-      'present_add': '',
-      'home_phone': '',
-      'mobile_phone': '',
-      'email_add_1': '',
-      'email_add_2': '',
-    };
+  delete() {
+    if (confirm(`Are you sure you want to delete your personal contact?`)) {
+      const editData = {
+        'tbl': 'tbl_personal_contact',
+        'emp_ID': this.emp_ID,
+        'present_add': '',
+        'home_phone': '',
+        'mobile_phone': '',
+        'email_add_1': '',
+        'email_add_2': '',
+      };
 
-    this.http.put<any>(`http://localhost:3000/delete`, editData)
-      .subscribe(
-        (resultData) => {
-          this.router.navigate(['home/personalcontact'])
-        },
-        error => {
-          console.error("Something went wrong:", error);
-        }
-      )
+      this.http.put<any>(`http://localhost:3000/delete`, editData)
+        .subscribe(
+          (resultData) => {
+            // Refreshes the current route if successful. Saves time from the user from clicking in and out
+            const currentUrl = this.router.url;
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate([currentUrl]);
+            });
+          },
+          error => {
+            console.error("Something went wrong:", error);
+          }
+        )
+    }
   }
 
   getPersonalContact() {

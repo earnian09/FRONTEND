@@ -24,9 +24,10 @@ export class AccountingdetailsComponent {
     });;
   }
 
-    addedit() { this.router.navigate(['home/accountingdetails/edit-accountingdetails']) }
+  addedit() { this.router.navigate(['home/accountingdetails/edit-accountingdetails']) }
 
-    delete() { 
+  delete() {
+    if (confirm(`Are you sure you want to delete your accounting details?`)) {
       const editData = {
         'tbl': 'tbl_accounting_details',
         'emp_ID': this.emp_ID,
@@ -35,17 +36,23 @@ export class AccountingdetailsComponent {
         'pagibig_no': '',
         'philhealth_no': '',
       };
-  
+
       this.http.put<any>(`http://localhost:3000/delete`, editData)
         .subscribe(
           (resultData) => {
-            this.router.navigate(['home/accountingdetails'])
+            // Refreshes the current route if successful. Saves time from the user from clicking in and out
+            const currentUrl = this.router.url;
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate([currentUrl]);
+            });
           },
           error => {
             console.error("Something went wrong:", error);
           }
         )
     }
+
+  }
 
   getEmployeeInfo() {
 

@@ -20,18 +20,27 @@ export class EditEmployeedetailsComponent {
   constructor(private router: Router, private sharedDataService: SharedDataService, private formBuilder: FormBuilder, private http: HttpClient) {
     this.emp_ID = this.sharedDataService.getEmployeeId();
     this.getEmployeeDetails().then(() => {
-      this.editForm = this.formBuilder.group({
-        emp_ID: [this.employeedetails?.emp_ID, Validators.required],
-        department: [this.employeedetails?.department, Validators.required],
-        date_hire: [this.employeedetails?.date_hire, Validators.required],
-        emp_type: [this.employeedetails?.emp_type, Validators.required],
-        teaching_class: [this.employeedetails?.teaching_class, Validators.required],
-        status: [this.employeedetails?.status, Validators.required],
-        date_regularized: [this.employeedetails?.date_regularized, Validators.required],
-        time_stamp: [this.employeedetails?.time_stamp, Validators.required],
-      });
+      this.initForm();
     });
+  }
 
+  ngOnInit() {
+    if (!this.editForm) {
+      this.initForm();
+    }
+  }
+
+  initForm() {
+    this.editForm = this.formBuilder.group({
+      emp_ID: [this.employeedetails?.emp_ID, Validators.required],
+      department: [this.employeedetails?.department, Validators.required],
+      date_hire: [this.employeedetails?.date_hire, Validators.required],
+      emp_type: [this.employeedetails?.emp_type, Validators.required],
+      teaching_class: [this.employeedetails?.teaching_class, Validators.required],
+      status: [this.employeedetails?.status, Validators.required],
+      date_regularized: [this.employeedetails?.date_regularized, Validators.required],
+      time_stamp: [this.employeedetails?.time_stamp, Validators.required],
+    });
   }
 
   confirm() {
@@ -47,6 +56,11 @@ export class EditEmployeedetailsComponent {
       'time_stamp': this.editForm.get('time_stamp')!.value,
     };
 
+    // Handles date being null, replaces with empty string to avoid errors
+    editData.date_hire ??= '';
+    editData.date_regularized ??= '';
+    editData.time_stamp ??= '';
+
     this.http.put<any>(`http://localhost:3000/update`, editData)
       .subscribe(
         (resultData) => {
@@ -58,7 +72,7 @@ export class EditEmployeedetailsComponent {
       )
   }
 
-  cancel() { }
+  cancel() { this.router.navigate(['home/employeedetails'])}
 
   getEmployeeDetails() {
 

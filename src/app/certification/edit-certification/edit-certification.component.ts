@@ -26,8 +26,20 @@ export class EditCertificationComponent {
     this.cert_ID = sharedDataService.get_itemID();
 
     // If the program is in edit mode, this happens
+    
+    this.getCertificationItem().then(() => {
+      this.initForm();
+    });
+  }
+
+  ngOnInit() {
+    if (!this.editForm) {
+      this.initForm();
+    }
+  }
+  
+  initForm() {
     if (this.isNewData === false) {
-      this.getCertificationItem().then(() => {
         this.editForm = this.formBuilder.group({
           mode: 'edit',
           attachment: [this.certificationItem?.attachment, Validators.required],
@@ -38,8 +50,7 @@ export class EditCertificationComponent {
           cert_type: [this.certificationItem?.cert_type, Validators.required],
           role: [this.certificationItem?.role, Validators.required],
           status: ['Approved'],
-        });
-       
+
       })
     }
     else {
@@ -74,6 +85,10 @@ export class EditCertificationComponent {
       'status': this.editForm.get('status')!.value,
     };
 
+    // Handles date being null, replaces with empty string to avoid errors
+    editData.date_issued ??= '';
+    editData.cert_time ??= '';
+
     this.http.put<any>(`http://localhost:3000/updateItem`, editData)
       .subscribe(
         (resultData) => {
@@ -82,7 +97,8 @@ export class EditCertificationComponent {
         error => {
           console.error("Something went wrong:", error);
         }
-      )}
+      )
+  }
   cancel() { this.router.navigate(['home/dependencies']) }
 
   getCertificationItem() {

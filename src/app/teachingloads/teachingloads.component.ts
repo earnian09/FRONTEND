@@ -27,10 +27,10 @@ export class TeachingloadsComponent {
   addedit(mode: String, teachingloads_ID: number) {
 
     if (mode === 'add') {
-    // Tells the target component that there will be new data, hence do not populate with existing data
-    this.sharedDataService.set_isNewData(true);
+      // Tells the target component that there will be new data, hence do not populate with existing data
+      this.sharedDataService.set_isNewData(true);
     }
-    else if (mode ==='edit'){
+    else if (mode === 'edit') {
       // Tells the target component that there is existing data, hence populate with existing data
       this.sharedDataService.set_isNewData(false);
       this.sharedDataService.set_itemID(teachingloads_ID);
@@ -44,8 +44,8 @@ export class TeachingloadsComponent {
     acad_year: String,
     sem: String,
     sub_taught: String,
-    ){
-    if (confirm(`Are you sure you want to delete ${acad_year} | ${sem} | ${sub_taught}?`)){
+  ) {
+    if (confirm(`Are you sure you want to delete ${acad_year} | ${sem} | ${sub_taught}?`)) {
       const postData = {
         'tbl': 'tbl_teaching_loads',
         'item_ID': teachingloads_ID,
@@ -56,8 +56,11 @@ export class TeachingloadsComponent {
         this.http.post<TeachingLoads>(`http://localhost:3000/deleteItem`, postData)
           .subscribe(
             (resultData) => {
-              // Set front end data taken from back end
-              this.router.navigate(['home/teachingloads'])
+              // Refreshes the current route if successful. Saves time from the user from clicking in and out
+              const currentUrl = this.router.url;
+              this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+                this.router.navigate([currentUrl]);
+              });
               resolve();
             },
             error => {
@@ -78,7 +81,7 @@ export class TeachingloadsComponent {
       'emp_ID': this.emp_ID,
       'page': 'teachingloads',
     };
-    
+
     // Get Employee Info
     return new Promise<void>((resolve, reject) => {
       this.http.post<TeachingLoads[]>(`http://localhost:3000/read`, postData)

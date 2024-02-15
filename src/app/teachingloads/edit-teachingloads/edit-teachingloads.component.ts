@@ -27,8 +27,20 @@ export class EditTeachingloadsComponent {
     
 
     // If the program is in edit mode, this happens
-    if (this.isNewData === false) {
+    
       this.getTeachingLoadsItem().then(() => {
+        this.initForm();
+      })
+  }
+
+  ngOnInit() {
+    if (!this.editForm) {
+      this.initForm();
+    }
+  }
+
+  initForm(){
+    if (this.isNewData === false) {
         this.editForm = this.formBuilder.group({
           mode: 'edit',
           acad_year: [this.teachingloadsItem?.acad_year, Validators.required],
@@ -36,7 +48,6 @@ export class EditTeachingloadsComponent {
           sub_taught: [this.teachingloadsItem?.sub_taught, Validators.required],
           no_of_units: [this.teachingloadsItem?.no_of_units, Validators.required]
         });
-      })
     }
     else {
       this.editForm = this.formBuilder.group({

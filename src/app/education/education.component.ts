@@ -21,35 +21,74 @@ export class EducationComponent {
     this.emp_ID = this.sharedDataService.getEmployeeId();
     this.view_mode = sharedDataService.get_view_mode();
     this.getEducation().then(() => {
-      console.log(this.education);
     });;
   }
 
-  addedit() { this.router.navigate(['home/education/edit-education']) }
+  addedit(degree: String) {
+    this.sharedDataService.set_Degree(degree);
+    this.router.navigate(['home/education/edit-education'])
+  }
 
-  delete() { 
-    const editData = {
+  delete(degree: String) {
+
+    let editData = {
       'tbl': 'tbl_education',
       'emp_ID': this.emp_ID,
-      'bac_school': '',
-      'bac_grad_date': '',
-      'mas_school': '',
-      'mas_grad_date': '',
-      'doc_school': '',
-      'doc_grad_date': '',
-      'prof_lic': '',
-      'lic_ID': ''
+      'bac_school': this.education?.bac_school,
+      'bac_grad_date': this.education?.bac_grad_date,
+      'mas_school': this.education?.mas_school,
+      'mas_grad_date': this.education?.mas_grad_date,
+      'doc_school': this.education?.doc_school,
+      'doc_grad_date': this.education?.doc_grad_date,
+      'prof_lic': this.education?.prof_lic,
+      'lic_ID': this.education?.lic_ID
     };
+    // Used for delete confirmation
+    let questionValue: String | null = null
 
-    this.http.put<any>(`http://localhost:3000/delete`, editData)
-      .subscribe(
-        (resultData) => {
-          this.router.navigate(['home/education'])
-        },
-        error => {
-          console.error("Something went wrong:", error);
-        }
-      )
+    switch (degree) {
+      case 'bac':
+        console.log(degree);
+        questionValue = this.education!.bac_school;
+        editData['bac_school'] = '';
+        editData['bac_grad_date'] = '';
+        break;
+      case 'mas':
+        console.log(degree);
+        questionValue = this.education!.mas_school;
+        editData['mas_school'] = '';
+        editData['mas_grad_date'] = '';
+        break;
+      case 'doc':
+        console.log(degree);
+        questionValue = this.education!.doc_school;
+        editData['doc_school'] = '';
+        editData['doc_grad_date'] = '';
+        break;
+      case 'lic':
+        console.log(degree);
+        questionValue = 'Licences';
+        editData['prof_lic'] = '';
+        editData['lic_ID'] = 0;
+        break;
+    }
+
+    if (confirm(`Are you sure you want to delete ${questionValue}?`)) {
+      this.http.put<any>(`http://localhost:3000/update`, editData)
+        .subscribe(
+          (resultData) => {
+            // Refreshes the current route if successful. Saves time from the user from clicking in and out
+            const currentUrl = this.router.url;
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate([currentUrl]);
+            });
+          },
+          error => {
+            console.error("Something went wrong:", error);
+          }
+        )
+    }
+
   }
 
   getEducation() {

@@ -20,14 +20,25 @@ export class EditAccountingdetailsComponent {
   constructor(private sharedDataService: SharedDataService, private router: Router, private formBuilder: FormBuilder, private http: HttpClient) {
     this.emp_ID = this.sharedDataService.getEmployeeId();
     this.getEmployeeInfo().then(() => {
-      this.editForm = this.formBuilder.group({
-        sss_no: [this.accountingdetails?.sss_no, Validators.required],
-        tax_no: [this.accountingdetails?.tax_no, Validators.required],
-        pagibig_no: [this.accountingdetails?.pagibig_no, Validators.required],
-        philhealth_no: [this.accountingdetails?.philhealth_no, Validators.required],
-      });
+      this.initForm();
     });
   }
+
+  ngOnInit() {
+    if (!this.editForm) {
+      this.initForm();
+    }
+  }
+
+  initForm(){
+    this.editForm = this.formBuilder.group({
+      sss_no: [this.accountingdetails?.sss_no, Validators.required],
+      tax_no: [this.accountingdetails?.tax_no, Validators.required],
+      pagibig_no: [this.accountingdetails?.pagibig_no, Validators.required],
+      philhealth_no: [this.accountingdetails?.philhealth_no, Validators.required],
+    });
+  }
+
   confirm() {
     const editData = {
       'tbl': 'tbl_accounting_details',

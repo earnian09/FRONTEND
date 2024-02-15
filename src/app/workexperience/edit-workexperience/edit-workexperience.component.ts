@@ -26,21 +26,29 @@ export class EditWorkexperienceComponent {
     this.experience_ID = sharedDataService.get_itemID();
 
     // If the program is in edit mode, this happens
+    this.getWorkExperienceItem().then(() => {
+      this.initForm();
+    })
+  }
+  
+  ngOnInit() {
+    if (!this.editForm) {
+      this.initForm();
+    }
+  }
+
+  initForm() {
     if (this.isNewData === false) {
-      this.getWorkExperienceItem().then(() => {
-        console.log(this.experienceItem);
-        
-        this.editForm = this.formBuilder.group({
-          mode: 'edit',
-          company_name: [this.experienceItem?.company_name, Validators.required],
-          date: [this.experienceItem?.date, Validators.required],
-          company_add: [this.experienceItem?.company_add, Validators.required],
-          position: [this.experienceItem?.position, Validators.required],
-          reason_exit: [this.experienceItem?.reason_exit, Validators.required],
-          type: [this.experienceItem?.type, Validators.required],
-        });
-       
-      })
+
+      this.editForm = this.formBuilder.group({
+        mode: 'edit',
+        company_name: [this.experienceItem?.company_name, Validators.required],
+        date: [this.experienceItem?.date, Validators.required],
+        company_add: [this.experienceItem?.company_add, Validators.required],
+        position: [this.experienceItem?.position, Validators.required],
+        reason_exit: [this.experienceItem?.reason_exit, Validators.required],
+        type: [this.experienceItem?.type, Validators.required],
+      });
     }
     else {
       this.editForm = this.formBuilder.group({
@@ -70,6 +78,9 @@ export class EditWorkexperienceComponent {
       'type': this.editForm.get('type')!.value,
     };
 
+    // Handles date being null, replaces with empty string to avoid errors
+    editData.date ??= '';
+
     this.http.put<any>(`http://localhost:3000/updateItem`, editData)
       .subscribe(
         (resultData) => {
@@ -78,7 +89,8 @@ export class EditWorkexperienceComponent {
         error => {
           console.error("Something went wrong:", error);
         }
-      )}
+      )
+  }
   cancel() { this.router.navigate(['home/workexperience']) }
 
   getWorkExperienceItem() {
@@ -95,7 +107,7 @@ export class EditWorkexperienceComponent {
         .subscribe(
           (resultData: WorkExperience) => {
             // Set front end data taken from back end
-            this.experienceItem = resultData;            
+            this.experienceItem = resultData;
             resolve();
           },
           error => {

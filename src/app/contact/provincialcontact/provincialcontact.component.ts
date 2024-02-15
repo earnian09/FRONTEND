@@ -26,10 +26,10 @@ export class ProvincialcontactComponent {
   addedit(mode: String, provincial_ID: number) {
 
     if (mode === 'add') {
-    // Tells the target component that there will be new data, hence do not populate with existing data
-    this.sharedDataService.set_isNewData(true);
+      // Tells the target component that there will be new data, hence do not populate with existing data
+      this.sharedDataService.set_isNewData(true);
     }
-    else if (mode ==='edit'){
+    else if (mode === 'edit') {
       // Tells the target component that there is existing data, hence populate with existing data
       this.sharedDataService.set_isNewData(false);
       this.sharedDataService.set_itemID(provincial_ID);
@@ -38,8 +38,9 @@ export class ProvincialcontactComponent {
     this.router.navigate(['home/provincialcontact/edit-provincialcontact'])
   }
 
-  deleteItem(provincial_ID: number, provincial_add: String, provincial_phone: String){
-    if (confirm(`Are you sure you want to delete ${provincial_add} | ${provincial_phone}?`)){
+
+  deleteItem(provincial_ID: number, provincial_add: String, provincial_phone: String) {
+    if (confirm(`Are you sure you want to delete ${provincial_add} | ${provincial_phone}?`)) {
       const postData = {
         'tbl': 'tbl_provincial_contact',
         'item_ID': provincial_ID,
@@ -50,8 +51,11 @@ export class ProvincialcontactComponent {
         this.http.post<ProvincialContact>(`http://localhost:3000/deleteItem`, postData)
           .subscribe(
             (resultData) => {
-              // Set front end data taken from back end
-              this.router.navigate(['home/provincialcontact'])
+              // Refreshes the current route if successful. Saves time from the user from clicking in and out
+              const currentUrl = this.router.url;
+              this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+                this.router.navigate([currentUrl]);
+              });
               resolve();
             },
             error => {

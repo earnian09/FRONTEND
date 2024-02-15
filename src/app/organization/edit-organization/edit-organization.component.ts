@@ -26,13 +26,24 @@ export class EditOrganizationComponent {
     this.org_ID = sharedDataService.get_itemID();
 
     // If the program is in edit mode, this happens
+    
+    this.getOrganizationsItem().then(() => {
+      this.initForm();
+    });
+  }
+  
+  ngOnInit() {
+    if (!this.editForm) {
+      this.initForm();
+    }
+  }
+
+  initForm(){
     if (this.isNewData === false) {
-      this.getOrganizationsItem().then(() => {
         this.editForm = this.formBuilder.group({
           mode: 'edit',
           org_name: [this.organizationsItem?.org_name, Validators.required],
           date: [this.organizationsItem?.date, Validators.required],
-        });
       })
     }
     else {
@@ -54,6 +65,9 @@ export class EditOrganizationComponent {
       'org_name': this.editForm.get('org_name')!.value,
       'date': this.editForm.get('date')!.value,
     };
+    
+    // Handles date being null, replaces with empty string to avoid errors
+    editData.date ??= '';
 
     this.http.put<any>(`http://localhost:3000/updateItem`, editData)
       .subscribe(

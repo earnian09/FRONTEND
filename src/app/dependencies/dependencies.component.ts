@@ -51,8 +51,11 @@ export class DependenciesComponent {
         this.http.post<Dependencies>(`http://localhost:3000/deleteItem`, postData)
           .subscribe(
             (resultData) => {
-              // Set front end data taken from back end
-              this.router.navigate(['home/dependencies'])
+              // Refreshes the current route if successful. Saves time from the user from clicking in and out
+              const currentUrl = this.router.url;
+              this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+                this.router.navigate([currentUrl]);
+              });
               resolve();
             },
             error => {

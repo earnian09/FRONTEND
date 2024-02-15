@@ -26,34 +26,40 @@ export class InfoComponent {
 
   addedit() { this.router.navigate(['home/employeeinformation/edit-information']) }
 
-  delete() { 
-    const editData = {
-      'tbl': 'tbl_info',
-      'emp_ID': this.emp_ID,
-      'emp_name': '',
-      'emp_nickname': '',
-      'emp_gender': '',
-      'emp_maiden_name': '',
-      'emp_sss_fName': '',
-      'emp_dob': '',
-      'emp_pob': '',
-      'emp_cStatus': '',
-      'emp_religion': '',
-      'emp_blood_type': '',
-      'no_of_loads': '',
-      'rest_day': '',
-      'emp_address': ''
-    };
+  delete() {
+    if (confirm(`Are you sure you want to delete your information?`)) {
+      const editData = {
+        'tbl': 'tbl_info',
+        'emp_ID': this.emp_ID,
+        'emp_name': '',
+        'emp_nickname': '',
+        'emp_gender': '',
+        'emp_maiden_name': '',
+        'emp_sss_fName': '',
+        'emp_dob': '',
+        'emp_pob': '',
+        'emp_cStatus': '',
+        'emp_religion': '',
+        'emp_blood_type': '',
+        'no_of_loads': '',
+        'rest_day': '',
+        'emp_address': ''
+      };
 
-    this.http.put<any>(`http://localhost:3000/delete`, editData)
-      .subscribe(
-        (resultData) => {
-          this.router.navigate(['home/employeeinformation'])
-        },
-        error => {
-          console.error("Something went wrong:", error);
-        }
-      )
+      this.http.put<any>(`http://localhost:3000/delete`, editData)
+        .subscribe(
+          (resultData) => {
+            // Refreshes the current route if successful. Saves time from the user from clicking in and out
+            const currentUrl = this.router.url;
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate([currentUrl]);
+            });
+          },
+          error => {
+            console.error("Something went wrong:", error);
+          }
+        )
+    }
   }
 
   getEmployeeInfo() {

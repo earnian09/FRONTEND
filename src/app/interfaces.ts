@@ -19,7 +19,7 @@ interface Certification {
     'cert_ID': number,
     'emp_ID': number,
     'attachment': String,
-    'date_issued': number,
+    'date_issued': String,
     'cert_time': String,
     'cert_title': String,
     'cert_validity': String,
@@ -32,7 +32,7 @@ interface Dependencies {
     'dependencies_ID': number,
     'emp_ID': number,
     'f_name': String,
-    'date_of_birth': number,
+    'date_of_birth': String,
     'relationship': String,
 }
 
@@ -40,7 +40,7 @@ interface Organizations {
     'org_ID': number,
     'emp_ID': number,
     'org_name': String,
-    'date': number,
+    'date': String,
 }
 
 interface AccountingDetails {
@@ -53,11 +53,11 @@ interface AccountingDetails {
 interface Education {
     'emp_ID': number,
     'bac_school': String,
-    'bac_grad_date': number,
+    'bac_grad_date': String,
     'mas_school': String,
-    'mas_grad_date': number,
+    'mas_grad_date': String,
     'doc_school': String,
-    'doc_grad_date': number,
+    'doc_grad_date': String,
     'prof_lic': String,
     'lic_ID': number,
 }
@@ -75,7 +75,7 @@ interface WorkExperience {
     'experience_ID': number,
     'emp_ID': number,
     'company_name': String,
-    'date': number,
+    'date': String,
     'company_add': String,
     'position': String,
     'reason_exit': String,
@@ -85,12 +85,12 @@ interface WorkExperience {
 interface EmployeeDetails {
     'emp_ID': number,
     'department': String,
-    'date_hire': number,
+    'date_hire': String,
     'emp_type': String,
     'teaching_class': String,
     'status': String,
-    'date_regularized': number,
-    'time_stamp': number,
+    'date_regularized': String,
+    'time_stamp': String,
 }
 
 interface PersonalContact {
@@ -124,8 +124,8 @@ interface Skills {
 }
 
 interface AllEmployees {
-    emp_ID: String,
-    password: String,
+    'emp_ID': String,
+    'password': String,
 }
 
 export { 

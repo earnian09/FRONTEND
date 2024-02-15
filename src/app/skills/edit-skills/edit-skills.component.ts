@@ -26,14 +26,24 @@ export class EditSkillsComponent {
     this.skills_ID = sharedDataService.get_itemID();
 
     // If the program is in edit mode, this happens
+    
+    this.getSkillsItem().then(() => {
+      this.initForm();
+    })
+  }
+  ngOnInit() {
+    if (!this.editForm) {
+      this.initForm();
+    }
+  }
+
+  initForm(){
     if (this.isNewData === false) {
-      this.getSkillsItem().then(() => {
         this.editForm = this.formBuilder.group({
           mode: 'edit',
           skills: [this.skillsItem?.skills, Validators.required],
         });
 
-      })
     }
     else {
       this.editForm = this.formBuilder.group({

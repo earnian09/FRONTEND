@@ -25,17 +25,25 @@ export class EditDependenciesComponent {
     this.isNewData = sharedDataService.get_isNewData();
     this.dependencies_ID = sharedDataService.get_itemID();
 
-    // If the program is in edit mode, this happens
+    this.getDependenciesItem().then(() => {
+      this.initForm();
+    })
+  }
+
+  ngOnInit() {
+    if (!this.editForm) {
+      this.initForm();
+    }
+  }
+
+  initForm(){
     if (this.isNewData === false) {
-      this.getDependenciesItem().then(() => {
-        this.editForm = this.formBuilder.group({
-          mode: 'edit',
-          f_name: [this.dependenciesItem?.f_name, Validators.required],
-          date_of_birth: [this.dependenciesItem?.date_of_birth, Validators.required],
-          relationship: [this.dependenciesItem?.relationship, Validators.required]
-        });
-       
-      })
+      this.editForm = this.formBuilder.group({
+        mode: 'edit',
+        f_name: [this.dependenciesItem?.f_name, Validators.required],
+        date_of_birth: [this.dependenciesItem?.date_of_birth, Validators.required],
+        relationship: [this.dependenciesItem?.relationship, Validators.required]
+      });
     }
     else {
       this.editForm = this.formBuilder.group({
@@ -67,7 +75,8 @@ export class EditDependenciesComponent {
         error => {
           console.error("Something went wrong:", error);
         }
-      )}
+      )
+  }
   cancel() { this.router.navigate(['home/dependencies']) }
 
   getDependenciesItem() {

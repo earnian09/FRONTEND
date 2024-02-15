@@ -44,12 +44,16 @@ export class AdminLoginComponent {
       this.http.post(`http://localhost:3000/login`, postData)
         .subscribe(
           (resultData) => {
-            // Result Found
-            console.log(resultData);
-
-            this.sharedDataService.set_view_mode('admin')
-            this.sharedDataService.set_department(accessidControl?.value)
+            // Saves employee ID to be used in other components
             this.sharedDataService.setEmployeeId(usernameControl?.value);
+            this.sharedDataService.setEmployeeId_session(usernameControl?.value);
+
+            // Save view mode (this tells the system which view to do), relevant for employee vs admin login
+            this.sharedDataService.set_view_mode('admin')
+            this.sharedDataService.set_view_mode_session('admin')
+
+            this.sharedDataService.set_department(accessidControl?.value)
+            this.sharedDataService.set_department_session(accessidControl?.value);
             this.router.navigate(['/home'])
           },
           error => {

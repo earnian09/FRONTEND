@@ -21,12 +21,22 @@ export class EditEmergencyComponent {
     this.emp_ID = this.sharedDataService.getEmployeeId();
 
     this.getEmergency().then(() => {
-      this.editForm = this.formBuilder.group({
-        contact_person: [this.emergency?.contact_person, Validators.required],
-        relationship: [this.emergency?.relationship, Validators.required],
-        home_phone_no: [this.emergency?.home_phone_no, Validators.required],
-        mobile_phone_no: [this.emergency?.mobile_phone_no, Validators.required],
-      });
+      this.initForm();
+    });
+  }
+  
+  ngOnInit() {
+    if (!this.editForm) {
+      this.initForm();
+    }
+  }
+  initForm(){
+
+    this.editForm = this.formBuilder.group({
+      contact_person: [this.emergency?.contact_person, Validators.required],
+      relationship: [this.emergency?.relationship, Validators.required],
+      home_phone_no: [this.emergency?.home_phone_no, Validators.required],
+      mobile_phone_no: [this.emergency?.mobile_phone_no, Validators.required],
     });
   }
 
