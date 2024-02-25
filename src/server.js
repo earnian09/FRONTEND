@@ -219,10 +219,10 @@ app.get('/getAllEmployees/:department', (req, res) => {
 // Login
 app.post('/login', (req, res) => {
 
-    const emp_ID = req.body.emp_ID;
+    const username = req.body.username;
     const password = req.body.password;
 
-    var sql = `SELECT * FROM tbl_login WHERE emp_ID = '${emp_ID}' AND password = '${password}'`;
+    var sql = `SELECT * FROM tbl_login WHERE username = '${username}' AND password = '${password}'`;
 
     db.query(sql, function (error, result) {
         if (error) {
@@ -232,7 +232,10 @@ app.post('/login', (req, res) => {
         } else {
             // Check if user is found
             if (result.length > 0) {
-                res.json({ message: "User Found" });
+                res.json({ 
+                    message: "User Found",
+                    emp_ID: result[0].emp_ID
+             });
             } else {
                 // Handle case where user is not found
                 res.status(404).send("User not found");

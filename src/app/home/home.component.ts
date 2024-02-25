@@ -17,6 +17,7 @@ import { BehaviorSubject, share } from 'rxjs';
 export class HomeComponent {
     view_mode: String | null = null;
     emp_ID: number | null = null;
+    dropdownOpen = false;
 
     employeeInformation: EmployeeInformation | null = null;
     employeeDetails: EmployeeDetails | null = null;
@@ -27,6 +28,7 @@ export class HomeComponent {
     allEmployees: AllEmployees[] = [];
     select_which_employee = 0;
     currentRoute$ = new BehaviorSubject<string>('');
+    currentPage: String | null = null;
 
     constructor(
         private router: Router,
@@ -35,8 +37,13 @@ export class HomeComponent {
     ) {
         this.emp_ID = this.sharedDataService.getEmployeeId();
         // Sets if user is an employee, Dep Admin or HRMO Admin
-        this.view_mode = sharedDataService.get_view_mode();        
+        this.view_mode = sharedDataService.get_view_mode();
+        // Used for passing to the path function
+        let page = sharedDataService.get_currentPage_session();
         
+        // This function serves as converting the sent path from the front end into readable text
+        this.pagePath(page);
+
         if (this.emp_ID == null) {
             console.log("emp_ID is null, running session service");
             this.emp_ID = Number(sharedDataService.getEmployeeId_session());
@@ -44,7 +51,7 @@ export class HomeComponent {
         }
         if (this.view_mode == null) {
             console.log("view_mode is null, running session service");
-            this.view_mode =  sharedDataService.get_view_mode_session();
+            this.view_mode = sharedDataService.get_view_mode_session();
             sharedDataService.set_view_mode(this.view_mode!)
         }
 
@@ -53,13 +60,13 @@ export class HomeComponent {
             let department = sharedDataService.get_department();
             // Used for retrieving session storage
             if (this.currentDepartment == null) {
-                this.currentDepartment = this.currentDepartment =  sharedDataService.get_department_session();
+                this.currentDepartment = this.currentDepartment = sharedDataService.get_department_session();
                 department = this.currentDepartment;
             }
             // Get all employees if it's an admin
             this.getAllEmployees(department).then(() => {
             });
-            this.getEmployeeInfo().then(() =>{
+            this.getEmployeeInfo().then(() => {
             });
 
             // Watches for select changes (select which employee to view)
@@ -75,9 +82,11 @@ export class HomeComponent {
             // Get employee info (for the side bar)
             this.getEmployeeInfo().then(() => {
                 this.currentEmployee = this.employeeInformation!.emp_name;
+                console.log(`currentEmployee: ${this.currentEmployee}`);
             });
             this.getDepartment().then(() => {
                 this.currentDepartment = this.employeeDetails!.department;
+                console.log(`{this.currentDepartment}`);
             });
         }
     }
@@ -175,7 +184,59 @@ export class HomeComponent {
     }
 
     navigate(path: any) {
+        console.log("navigating...");
+        
+        // This function serves as converting the sent path from the front end into readable text
+        this.pagePath(path);
+        // Saves currentPage in the session
+        this.sharedDataService.set_currentPage_session(path)
+
         this.router.navigate(['home', `${path}`])
+    }
+
+    // switch statement used for setting page path into appropriate text
+    pagePath(path: any) {
+        switch (path) {
+            case 'employeeinformation':
+                this.currentPage = "Information"
+                break
+            case 'dependencies':
+                this.currentPage = "Dependencies"
+                break
+            case 'certification':
+                this.currentPage = "Certification"
+                break
+            case 'organization':
+                this.currentPage = "Organization"
+                break
+            case 'accountingdetails':
+                this.currentPage = "Accounting Details"
+                break
+            case 'education':
+                this.currentPage = "Education"
+                break
+            case 'teachingloads':
+                this.currentPage = "Teaching Loads"
+                break
+            case 'workexperience':
+                this.currentPage = "Work Experience"
+                break
+            case 'employeedetails':
+                this.currentPage = "Employee Details"
+                break
+            case 'skills':
+                this.currentPage = "Skills"
+                break
+            case 'personalcontact':
+                this.currentPage = "Personal Contact"
+                break
+            case 'provincialcontact':
+                this.currentPage = "Provincial Contact"
+                break
+            case 'emergencycontact':
+                this.currentPage = "Emergency Contact"
+                break
+        }
     }
 
     // Code to disable pressed button
@@ -189,5 +250,14 @@ export class HomeComponent {
                 this.buttonStates[i] = false;
             }
         }
+    }
+
+    toggleDropdown(event: MouseEvent) {
+        event.stopPropagation(); // Prevent click event from bubbling up to document
+        this.dropdownOpen = !this.dropdownOpen;
+    }
+
+    closeDropdown() {
+        this.dropdownOpen = false;
     }
 }

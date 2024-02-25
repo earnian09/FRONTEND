@@ -27,10 +27,10 @@ export class CertificationComponent {
   addedit(mode: String, cert_ID: number) {
 
     if (mode === 'add') {
-    // Tells the target component that there will be new data, hence do not populate with existing data
-    this.sharedDataService.set_isNewData(true);
+      // Tells the target component that there will be new data, hence do not populate with existing data
+      this.sharedDataService.set_isNewData(true);
     }
-    else if (mode ==='edit'){
+    else if (mode === 'edit') {
       // Tells the target component that there is existing data, hence populate with existing data
       this.sharedDataService.set_isNewData(false);
       this.sharedDataService.set_itemID(cert_ID);
@@ -39,9 +39,9 @@ export class CertificationComponent {
     this.router.navigate(['home/certification/edit-certification'])
   }
 
-  deleteItem(cert_ID: number, cert_title: String, attachment_ID: String){
-    if (confirm(`Are you sure you want to delete ${cert_title}?`)){
-      
+  deleteItem(cert_ID: number, cert_title: String, attachment_ID: String) {
+    if (confirm(`Are you sure you want to delete ${cert_title}?`)) {
+
       const postData = {
         'tbl': 'tbl_certification',
         'item_ID': cert_ID,
@@ -60,18 +60,24 @@ export class CertificationComponent {
                   'attachment_ID': attachment_ID
                 }
 
-                // After deleting from database is done, delete the file from google drive.                
-                this.http.post(`http://localhost:3000/deleteCertification`, postData_certificateDelete)
-                .subscribe(
-                  (resultData) => {
-                    this.router.navigate([currentUrl]);
-                    resolve();
-                  },
-                  error => {
-                    console.error("Error deleting certification from drive", error);
-                    alert("Something went wrong");                    
-                  }
-                )
+                if (attachment_ID != null) {
+                  // After deleting from database is done, delete the file from google drive.                
+                  this.http.post(`http://localhost:3000/deleteCertification`, postData_certificateDelete)
+                    .subscribe(
+                      (resultData) => {
+                        this.router.navigate([currentUrl]);
+                        resolve();
+                      },
+                      error => {
+                        console.error("Error deleting certification from drive", error);
+                        alert("Something went wrong");
+                      }
+                    )
+                }
+                else {
+                  this.router.navigate([currentUrl]);
+                  resolve();
+                }
               });
             },
             error => {
@@ -79,9 +85,7 @@ export class CertificationComponent {
               alert("Sum Ting Wong");
               reject(error);
             }
-            
           );
-          
       });
     } else {
       return false;
@@ -89,8 +93,8 @@ export class CertificationComponent {
   }
 
   // decision is approve or deny
-  approveordeny(decision: String, cert_ID: number, cert_title: String){
-    if (confirm(`Are you sure you want to ${decision} ${cert_title}?`)){
+  approveordeny(decision: String, cert_ID: number, cert_title: String) {
+    if (confirm(`Are you sure you want to ${decision} ${cert_title}?`)) {
       let newStatus = '';
       if (decision == 'approve') {
         newStatus = 'Approved';
@@ -104,7 +108,7 @@ export class CertificationComponent {
         'mode': 'edit',
         'table_primary_key': 'cert_ID',
         'status': newStatus
-      };      
+      };
 
       // Update Status
       return new Promise<void>((resolve, reject) => {
@@ -154,7 +158,7 @@ export class CertificationComponent {
 
   // Displays whether or not a status exists.
   // Ex: No item in the certification list has a status of approved, hence don't show it
-  statusExists(status:String) {
+  statusExists(status: String) {
     return this.certification.some(c => c['status'] === status);
   }
 

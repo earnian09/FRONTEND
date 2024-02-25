@@ -10,6 +10,7 @@ export class SharedDataService {
   private newData: Boolean | null = null;
   private item_ID: number | null = null;
   private degree: String | null = null;
+  private currentPage: String | null = null;
 
   // Saves employee ID to be used in other components
   setEmployeeId(id: number): void {
@@ -20,7 +21,7 @@ export class SharedDataService {
   }
 
   // Saves employee ID in the session
-  setEmployeeId_session(emp_ID: string) {    
+  setEmployeeId_session(emp_ID: string) {
     sessionStorage.setItem('emp_ID', emp_ID);
   }
   getEmployeeId_session(): string | null {
@@ -36,7 +37,7 @@ export class SharedDataService {
   }
 
   // Saves view_mode in the session
-  set_view_mode_session(department: string) { 
+  set_view_mode_session(department: string) {
     sessionStorage.setItem('department', department);
   }
   get_view_mode_session(): string | null {
@@ -50,7 +51,7 @@ export class SharedDataService {
   get_department(): String | null {
     return this.department;
   }
-  
+
   // Saves department in the session
   set_department_session(view_mode: string) {
     sessionStorage.setItem('view_mode', view_mode);
@@ -83,4 +84,13 @@ export class SharedDataService {
   get_Degree(): String | null {
     return this.degree;
   }
+
+  // Saves currentPage in the session
+  set_currentPage_session(currentPage: string) {
+    sessionStorage.setItem('currentPage', currentPage);
+  }
+  get_currentPage_session(): string | null {
+    return sessionStorage.getItem('currentPage')
+  }
+
 }
