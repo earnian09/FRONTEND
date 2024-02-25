@@ -19,6 +19,8 @@ interface Certification {
     'cert_ID': number,
     'emp_ID': number,
     'attachment': String,
+    'attachment_name': String,
+    'attachment_id': String,
     'date_issued': String,
     'cert_time': String,
     'cert_title': String,

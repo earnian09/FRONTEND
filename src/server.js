@@ -9,6 +9,11 @@ const { log } = require('@angular-devkit/build-angular/src/builders/ssr-dev-serv
 app.use(bodyParser.json());
 app.use(cors());
 
+const { google } = require('googleapis')
+const multer = require('multer')
+const path = require('path')
+const fs = require('fs')
+
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -297,7 +302,7 @@ app.put('/updateItem', (req, res) => {
     const updateBody = req.body;
     const table_primary_key = req.body.table_primary_key;
 
-    
+
     // Code relevant to commas in sql query
     let keyCount = Object.keys(updateBody).length;
     let currentKeyIndex = 0;
@@ -368,8 +373,12 @@ app.put('/updateItem', (req, res) => {
             // Handle database errors
             res.status(500).send("Error Updating");
         } else {
+            const cert_ID = result.insertId;
             console.log(`Updating of ${updateBody.tbl} Success`);
-            res.json({ message: `Updating of ${updateBody.tbl} Success` });
+            res.json({
+                message: `Updating of ${updateBody.tbl} Success`,
+                cert_ID: cert_ID
+            });
         }
     });
 
@@ -433,8 +442,7 @@ app.post('/deleteItem', (req, res) => {
     const table_primary_key = req.body.table_primary_key;
     const updateBody = req.body;
 
-    sql = `DELETE FROM ${updateBody.tbl}
-    WHERE ${table_primary_key} = ${item_ID}`;
+    sql = `DELETE FROM ${updateBody.tbl} WHERE ${table_primary_key} = ${item_ID}`;
 
     console.log(sql)
 
@@ -450,6 +458,106 @@ app.post('/deleteItem', (req, res) => {
         }
     });
 })
+
+// Uploading Certificate
+const storage = multer.diskStorage({
+    destination: 'uploads',
+    filename: function (req, file, callback) {
+        const extension = file.originalname.split('.').pop()
+        callback(null, `${file.fieldname}-${Date.now()}.${extension}`)
+    }
+})
+
+const upload = multer({ storage: storage }).single('file'); // Change to single file upload
+
+// Uploading files to Google Drive
+app.post('/upload', async (req, res) => {
+    try {
+        upload(req, res, async function (err) {
+            if (err instanceof multer.MulterError) {
+                // A Multer error occurred when uploading.
+                console.log(err);
+                return res.status(500).json({ error: 'Multer error' });
+            } else if (err) {
+                // An unknown error occurred when uploading.
+                console.log(err);
+                return res.status(500).json({ error: 'Unknown error' });
+            }
+
+            const file = req.file;
+
+            const auth = new google.auth.GoogleAuth({
+                keyFile: "key.json",
+                scopes: ['https://www.googleapis.com/auth/drive']
+            })
+
+            const drive = google.drive({ version: "v3", auth });
+
+            const uploadedFiles = [];
+            // Upload the files
+            const response = await drive.files.create({
+                requestBody: {
+                    name: file.originalname,
+                    mimeType: file.mimeType,
+                    parents: ['1eM6sAWilyG29A12mDeb-gV1qbQpj0Opv']
+                },
+                media: { body: fs.createReadStream(file.path) }
+            });
+
+            uploadedFiles.push(response.data);
+
+            // Retreieve the fileID from the newly uploaded file
+            const fileID = response.data.id;
+
+            // Get the download link using the above fileID
+            const fileMetadata = await drive.files.get({
+                fileId: fileID,
+                fields: 'webViewLink'
+            });
+            const downloadLink = fileMetadata.data.webViewLink;
+
+            res.json({
+                downloadLink: downloadLink,
+                fileID: fileID
+            });
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+// Deleting files from Google Drive
+app.post('/deleteCertification', async (req, res) => {
+    try {
+        const fileId = req.body.attachment_ID; // Assuming fileId is sent in the request body
+        console.log(`file ID to delete: ${fileId}`);
+
+        if (!fileId) {
+            return res.status(400).json({ error: 'File ID is required' });
+        }
+
+        const auth = new google.auth.GoogleAuth({
+            keyFile: "key.json",
+            scopes: ['https://www.googleapis.com/auth/drive']
+        })
+
+        const drive = google.drive({ version: "v3", auth });
+
+        // Delete the file
+        await drive.files.delete({
+            fileId: fileId
+        });
+
+        res.json({
+            message: 'File deleted successfully'
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);

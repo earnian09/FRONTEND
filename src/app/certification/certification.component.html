@@ -22,7 +22,7 @@
             <ng-container *ngFor="let c of certification">
                 <tr *ngIf="c['status'] === 'Approved'">
                     <td>{{c['cert_ID']}}</td>
-                    <td>{{c['attachment']}}</td>
+                    <a href="{{c['attachment']}}" target="_blank">{{c['attachment_name'] ? c['attachment_name'] : 'unnamed'}}</a>
                     <td>{{c['date_issued']}}</td>
                     <td>{{c['cert_time']}}</td>
                     <td>{{c['cert_title']}}</td>
@@ -33,7 +33,7 @@
                     <td *ngIf="view_mode == 'employee'">
                         <button class="btn btn-secondary" (click)="addedit('edit', c['cert_ID'])">Edit</button>
                         <button class="btn btn-danger"
-                            (click)="deleteItem(c['cert_ID'], c['cert_title'])">Delete</button>
+                            (click)="deleteItem(c['cert_ID'], c['cert_title'], c['attachment_id'])">Delete</button>
                     </td>
                 </tr>
             </ng-container>
@@ -68,7 +68,9 @@
             <ng-container *ngFor="let c of certification">
                 <tr *ngIf="c['status'] === 'Pending'">
                     <td>{{c['cert_ID']}}</td>
-                    <td>{{c['attachment']}}</td>
+                    <td>
+                        <a href="{{c['attachment']}}" target="_blank">{{c['attachment_name'] ? c['attachment_name'] : 'unnamed'}}</a>
+                    </td>
                     <td>{{c['date_issued']}}</td>
                     <td>{{c['cert_time']}}</td>
                     <td>{{c['cert_title']}}</td>
@@ -79,10 +81,12 @@
                     <td *ngIf="view_mode == 'employee'">
                         <button class="btn btn-secondary" (click)="addedit('edit', c['cert_ID'])">Edit</button>
                         <button class="btn btn-danger"
-                            (click)="deleteItem(c['cert_ID'], c['cert_title'])">Delete</button>
+                            (click)="deleteItem(c['cert_ID'], c['cert_title'], c['attachment_id'])">Delete</button>
                     </td>
+                    <!-- Only for admins -->
                     <td *ngIf="view_mode == 'admin'">
-                        <button class="btn btn-success" (click)="approveordeny('approve', c['cert_ID'], c['cert_title'])">Approve</button>
+                        <button class="btn btn-success"
+                            (click)="approveordeny('approve', c['cert_ID'], c['cert_title'])">Approve</button>
                         <button class="btn btn-danger"
                             (click)="approveordeny('deny', c['cert_ID'], c['cert_title'])">Deny</button>
                     </td>
@@ -114,7 +118,7 @@
             <ng-container *ngFor="let c of certification">
                 <tr *ngIf="c['status'] === 'Denied'">
                     <td>{{c['cert_ID']}}</td>
-                    <td>{{c['attachment']}}</td>
+                    <a href="{{c['attachment']}}" target="_blank">{{c['attachment_name'] ? c['attachment_name'] : 'unnamed'}}</a>
                     <td>{{c['date_issued']}}</td>
                     <td>{{c['cert_time']}}</td>
                     <td>{{c['cert_title']}}</td>
@@ -125,7 +129,7 @@
                     <td *ngIf="view_mode == 'employee'">
                         <button class="btn btn-secondary" (click)="addedit('edit', c['cert_ID'])">Edit</button>
                         <button class="btn btn-danger"
-                            (click)="deleteItem(c['cert_ID'], c['cert_title'])">Delete</button>
+                            (click)="deleteItem(c['cert_ID'], c['cert_title'], c['attachment_id'])">Delete</button>
                     </td>
                 </tr>
             </ng-container>

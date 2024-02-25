@@ -36,7 +36,7 @@ export class SharedDataService {
   }
 
   // Saves view_mode in the session
-  set_view_mode_session(department: string) {
+  set_view_mode_session(department: string) { 
     sessionStorage.setItem('department', department);
   }
   get_view_mode_session(): string | null {

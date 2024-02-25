@@ -1,9 +1,15 @@
 <h2>Edit/Add Certification</h2>
 
+
 <form [formGroup]="editForm" (ngSubmit)="confirm()">
     <div class="col p-4 border">
         <label class="form-label">Attachment</label>
-        <input type="text" class="form-control" formControlName="attachment">
+        <div *ngIf="certificationItem?.attachment_id !== null && certificationItem?.attachment_id !== undefined && certificationItem?.attachment_id !==''">
+            <h3>You have an attachment already. Upload to replace the file</h3>
+            <a href="{{certificationItem!['attachment']}}">{{certificationItem!['attachment_name']}}</a>
+        </div>
+        <input type="file" class="form-control" formControlName="attachment" (change)="onFileSelected($event)" accept="application/pdf" />
+        <!-- <input type="text" class="form-control" formControlName="attachment"> -->
 
         <label class="form-label">Date Issued</label>
         <input type="date" class="form-control" formControlName="date_issued">
@@ -13,7 +19,7 @@
 
         <label class="form-label">Title</label>
         <input type="text" class="form-control" formControlName="cert_title">
-        
+
         <label class="form-label">Validity</label>
         <input type="text" class="form-control" formControlName="cert_validity">
 
@@ -30,4 +36,12 @@
 <div>
     <button (click)="confirm()" class="btn btn-primary">Confirm</button>
     <button (click)="cancel()" class="btn btn-secondary">Cancel</button>
+</div>
+
+<div *ngIf="loading">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    Uploading...
+    <i>Do not close this tab or browser. It may take longer depending on your internet connection.</i>
 </div>

@@ -39,14 +39,15 @@ export class CertificationComponent {
     this.router.navigate(['home/certification/edit-certification'])
   }
 
-  deleteItem(cert_ID: number, cert_title: String){
+  deleteItem(cert_ID: number, cert_title: String, attachment_ID: String){
     if (confirm(`Are you sure you want to delete ${cert_title}?`)){
+      
       const postData = {
         'tbl': 'tbl_certification',
         'item_ID': cert_ID,
         'table_primary_key': 'cert_ID',
       };
-      // Delete Dependencies
+      // Delete Certification
       return new Promise<void>((resolve, reject) => {
         this.http.post<Certification>(`http://localhost:3000/deleteItem`, postData)
           .subscribe(
@@ -54,16 +55,33 @@ export class CertificationComponent {
               // Refreshes the current route if successful. Saves time from the user from clicking in and out
               const currentUrl = this.router.url;
               this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-                this.router.navigate([currentUrl]);
+
+                const postData_certificateDelete = {
+                  'attachment_ID': attachment_ID
+                }
+
+                // After deleting from database is done, delete the file from google drive.                
+                this.http.post(`http://localhost:3000/deleteCertification`, postData_certificateDelete)
+                .subscribe(
+                  (resultData) => {
+                    this.router.navigate([currentUrl]);
+                    resolve();
+                  },
+                  error => {
+                    console.error("Error deleting certification from drive", error);
+                    alert("Something went wrong");                    
+                  }
+                )
               });
-              resolve();
             },
             error => {
               console.error("Error deleting certificaion item:", error);
               alert("Sum Ting Wong");
               reject(error);
             }
+            
           );
+          
       });
     } else {
       return false;
